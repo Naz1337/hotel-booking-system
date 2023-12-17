@@ -55,7 +55,13 @@ public class Hotel extends Business {
             Room room = this.rooms[i];
 
             // cari booking yang sama dengan bilik ni
+            Booking[] bookings = this.findBookingRelatedTo(room);
 
+            for (int j = 0; j < bookings.length; j++) {
+                Booking book = bookings[j];
+
+
+            }
 
         }
 
@@ -74,7 +80,7 @@ public class Hotel extends Business {
             }
 
             notList[numberOfBookingInNotList++] = book;
-            if ((double)numberOfBookingInNotList / (double)notList.length < 0.5) {
+            if ((double)numberOfBookingInNotList / (double)notList.length < 0.75) {
                 continue;
             }
 

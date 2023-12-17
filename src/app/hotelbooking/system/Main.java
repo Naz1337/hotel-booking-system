@@ -3,6 +3,7 @@ package app.hotelbooking.system;
 import java.time.LocalDate;
 import java.time.Duration;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -60,7 +61,31 @@ public class Main {
         }
         User chosenOne = searchResult.get();
 
+        crossPlatformClearScreen();
 
+        System.out.println("Before you start, we need to know when your booking start and end.\n");
+        System.out.print("For the starting date of your booking, please enter the date in the format (DD/MM/YYYY): ");
+        String userInput2 = scanner.nextLine();
+
+        System.out.print("Now, enter the last day of your booking in the same format (DD/MM/YYYY): ");
+        String userInput3 = scanner.nextLine();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        LocalDate startingDate = LocalDate.parse(userInput2, formatter);
+        LocalDate lastDate = LocalDate.parse(userInput3, formatter);
+
+        // TODO: buat kalau invalid input/date, mintak balik
+
+        
+
+
+    }
+
+    public static void crossPlatformClearScreen() {
+        for (int i = 0; i < 100; i++) {
+            System.out.print('\n');
+        }
     }
     
     public static boolean isValidLuhn(String number) {

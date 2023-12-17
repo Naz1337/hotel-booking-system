@@ -105,7 +105,7 @@ public class Hotel extends Business {
         Booking[] notList = new Booking[4];
         int numberOfBookingInNotList = 0;
 
-        for (int i = 0; i < this.bookings.length; i++) {
+        for (int i = 0; i < this.numberOfBookings; i++) {
             Booking book = this.bookings[i];
 
             if (book.getBookedRoom() != room) {

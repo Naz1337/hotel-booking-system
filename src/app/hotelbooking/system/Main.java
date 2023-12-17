@@ -3,6 +3,8 @@ package app.hotelbooking.system;
 import java.time.LocalDate;
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.Optional;
+import java.util.Scanner;
 
 /**
  *
@@ -18,10 +20,45 @@ public class Main {
 
         // System.out.println(isValidLuhn(ccNumber));
 
+        Scanner scanner = new Scanner(System.in);
+
         Hotel hotelUMP = Hotel.getInstance().setHotelName("UMP Hotel");
 
-        
-        
+        hotelUMP.addCustomer(new User(1, "Alice Smith", "1234567890"));
+        hotelUMP.addCustomer(new User(2, "Bob Johnson", "2345678901"));
+        hotelUMP.addCustomer(new User(3, "Charlie Brown", "3456789012"));
+        hotelUMP.addCustomer(new User(4, "Diana Prince", "4567890123"));
+        hotelUMP.addCustomer(new User(5, "Edward King", "5678901234"));
+        hotelUMP.addCustomer(new User(6, "Fiona Queen", "6789012345"));
+
+        System.out.println("Welcome to UMP Hotel Booking System Interface!\n");
+
+        for (int i = 0; i < hotelUMP.numberOfCustomers; i++) {
+            User customer = hotelUMP.getCustomers()[i];
+
+            System.out.println(String.format(
+                "%d. %s", customer.getUserID(), customer.getName()));
+        }
+
+        System.out.println("\nPlease choose one of the customer to login as or type 'register' to register a new customer");
+        System.out.print("INPUT: ");
+
+        String userInput1 = scanner.nextLine();
+
+        userInput1 = userInput1.toLowerCase();
+
+        if (userInput1.startsWith("register")) {
+            System.out.println("This flow is not implemented yet. please check back later");
+            return;
+        }
+
+        Optional<User> searchResult = hotelUMP.getCustomerByID(Integer.valueOf(userInput1));
+
+        if (! searchResult.isPresent()) {
+            System.out.println("The ID you typed in is invalid. please tru again later");
+            return;
+        }
+        User chosenOne = searchResult.get();
 
 
     }

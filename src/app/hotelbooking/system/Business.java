@@ -1,0 +1,38 @@
+package app.hotelbooking.system;
+
+import java.util.Optional;
+
+/**
+ * Business
+ */
+public abstract class Business {
+    protected User[] customers;
+
+    public Business() {
+        this.customers = new User[128];
+    }
+
+    public User[] getCustomers() {
+        return customers;
+    }
+
+
+
+    public void setCustomers(User[] users) {
+        this.customers = users;
+    }
+
+    public Optional<User> getCustomerByID(int ID) {
+        User users[] = this.getCustomers();
+        for (int i = 0; i < users.length; i++) {
+            User user = users[i];
+
+            if (user.getUserID() == ID)
+                return Optional.of(user);
+        }
+
+        return Optional.empty();
+    }
+
+    abstract public Service provideService(User customer, Object... informations);
+}

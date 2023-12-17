@@ -7,9 +7,19 @@ import java.util.Optional;
  */
 public abstract class Business {
     protected User[] customers;
+    protected int numberOfCustomers;
 
     public Business() {
         this.customers = new User[128];
+        numberOfCustomers = 0;
+    }
+
+    public boolean addUser(User user) {
+        if (this.numberOfCustomers == this.customers.length) 
+            return false;
+        
+        this.customers[this.numberOfCustomers++] = user;
+        return true;
     }
 
     public User[] getCustomers() {

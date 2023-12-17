@@ -50,6 +50,8 @@ public class Hotel extends Business {
      * @return
      */
     public Room[] avaliableRooms(LocalDate startingDate, LocalDate lastDate) {
+        Room[] notList = new Room[4];
+        int notListLength = 0;
         
         for (int i = 0; i < this.rooms.length; i++) {
             Room room = this.rooms[i];
@@ -57,15 +59,46 @@ public class Hotel extends Business {
             // cari booking yang sama dengan bilik ni
             Booking[] bookings = this.findBookingRelatedTo(room);
 
+            boolean available = true;
             for (int j = 0; j < bookings.length; j++) {
                 Booking book = bookings[j];
 
+                LocalDate lastBook = book.getStartDate().plusDays(book.getBookingDuration().toDays());
 
+                if (
+                    !(
+                        startingDate.isAfter(lastBook) 
+                        || ((!(startingDate.isAfter(book.getStartDate())))
+                        && book.getStartDate().isAfter(lastDate))
+                    )
+                ) {
+                    available = false;
+                    break;
+                }
+            }
+
+            if (available) {
+                notList[notListLength++] = room;
+
+                if ((double)notListLength / (double)notList.length > 0.75) {
+                    Room[] temp = new Room[notList.length*2];
+                    
+                    for (int j = 0; j < notListLength; j++) {
+                        temp[j] = notList[j];
+                    }
+
+                    notList = temp;
+                }
             }
 
         }
 
-        return null;
+        Room[] finalRooms = new Room[notListLength];
+        for (int i = 0; i < finalRooms.length; i++) {
+            finalRooms[i] = notList[i];
+        }
+
+        return finalRooms;
     }
 
     public Booking[] findBookingRelatedTo(Room room) {

@@ -49,8 +49,48 @@ public class Hotel extends Business {
      * @param room
      * @return
      */
-    public boolean isRoomAvailable(Room room) {
-        return true;
+    public Room[] avaliableRooms(LocalDate startingDate, LocalDate lastDate) {
+        
+        for (int i = 0; i < this.rooms.length; i++) {
+            Room room = this.rooms[i];
+
+            // cari booking yang sama dengan bilik ni
+
+
+        }
+
+        return null;
+    }
+
+    public Booking[] findBookingRelatedTo(Room room) {
+        Booking[] notList = new Booking[4];
+        int numberOfBookingInNotList = 0;
+
+        for (int i = 0; i < this.bookings.length; i++) {
+            Booking book = this.bookings[i];
+
+            if (book.getBookedRoom() != room) {
+                continue;
+            }
+
+            notList[numberOfBookingInNotList++] = book;
+            if ((double)numberOfBookingInNotList / (double)notList.length < 0.5) {
+                continue;
+            }
+
+            Booking[] temp = new Booking[notList.length*2];
+            for (int j = 0; j < numberOfBookingInNotList; j++) {
+                temp[j] = notList[j];
+            }
+            notList = temp;  // GC ⭐
+        }
+
+        Booking[] shrinkedArray = new Booking[numberOfBookingInNotList];
+
+        for (int i = 0; i < shrinkedArray.length; i++) {
+            shrinkedArray[i] = notList[i];
+        }
+        return shrinkedArray;
     }
 
 

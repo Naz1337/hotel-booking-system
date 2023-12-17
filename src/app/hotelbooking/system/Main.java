@@ -20,7 +20,7 @@ public class Main {
 
         Hotel hotelUMP = Hotel.getInstance().setHotelName("UMP Hotel");
 
-
+        
         
 
 

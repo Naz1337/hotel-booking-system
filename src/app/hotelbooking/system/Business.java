@@ -14,7 +14,7 @@ public abstract class Business {
         numberOfCustomers = 0;
     }
 
-    public boolean addUser(User user) {
+    public boolean addCustomer(User user) {
         if (this.numberOfCustomers == this.customers.length) 
             return false;
         

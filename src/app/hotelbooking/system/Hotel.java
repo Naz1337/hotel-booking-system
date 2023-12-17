@@ -7,6 +7,7 @@ public class Hotel extends Business {
     private String hotelName;
     private Room[] rooms;
     private Booking[] bookings;
+    private int numberOfBookings;
     private static final Hotel INSTANCE = new Hotel();
 
     
@@ -15,10 +16,19 @@ public class Hotel extends Business {
         this.hotelName = null;
         this.rooms = new Room[128];
         this.bookings = new Booking[768];
+        this.numberOfBookings = 0;
     }
 
     public static Hotel getInstance() {
         return Hotel.INSTANCE;
+    }
+
+    public boolean addBooking(Booking book) {
+        if (this.bookings.length == this.numberOfBookings)
+            return false;
+        
+        this.bookings[this.numberOfBookings++] = book;
+        return true;
     }
 
     /**

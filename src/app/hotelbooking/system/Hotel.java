@@ -112,6 +112,13 @@ public class Hotel extends Business {
         
         Duration bookingDuration = (Duration)informations[2];
 
-        return (Service)(new Booking(bookedRoom, customer, startDate, bookingDuration));
+        Booking booking = new Booking(bookedRoom, customer, startDate, bookingDuration);
+
+        if (! this.addBooking(booking)) {
+            System.out.println("[WARN] Bookings array is full 👍");
+            return null;
+        }
+
+        return (Service)(booking);
     }
 }

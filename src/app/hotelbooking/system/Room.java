@@ -17,6 +17,14 @@ public class Room implements Bookable{
     private int floorLevel;
     private int roomNumber;
 
+    public Room(int roomID, int bedCount, double price, int floorLevel, int roomNumber) {
+        this.roomID = roomID;
+        this.bedCount = bedCount;
+        this.price = price;
+        this.floorLevel = floorLevel;
+        this.roomNumber = roomNumber;
+    }
+
     @Override
     public String toString() {
         return this.getRoomName();

@@ -14,9 +14,22 @@ public class Hotel extends Business {
     public Hotel() {
         super();
         this.hotelName = null;
-        this.rooms = new Room[128];
+        this.rooms = new Room[8];
         this.bookings = new Booking[768];
         this.numberOfBookings = 0;
+
+        this.rooms[0] = new Room(1, 1, 50., 1, 1);
+        this.rooms[1] = new Room(2, 1, 50., 1, 2);
+        this.rooms[2] = new Room(3, 1, 50., 1, 3);
+        this.rooms[3] = new Room(4, 1, 50., 1, 4);
+        this.rooms[4] = new Room(5, 4, 300., 1, 1);
+        this.rooms[5] = new Room(6, 4, 300., 1, 2);
+        this.rooms[6] = new Room(7, 4, 300., 1, 3);
+        this.rooms[7] = new Room(8, 4, 300., 1, 4);
+
+
+
+
     }
 
     public static Hotel getInstance() {

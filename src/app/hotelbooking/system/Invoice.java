@@ -167,6 +167,33 @@ public class Invoice {
         this.paidWith = "cash";
     }
 
+    public boolean payByCard(String ccNo) {
+        int checksum = Character.getNumericValue(ccNo.charAt(ccNo.length() - 1));
+        int total = 0;
+
+        for (int i = ccNo.length() - 2; i >= 0; i--) {
+            int sum = 0;
+            int digit = Character.getNumericValue(ccNo.charAt(i));
+            if (i % 2 == 0) {
+                digit *= 2;
+            }
+
+            sum = digit / 10 + digit % 10;
+            total += sum;
+        }
+
+        boolean validCard =  10 - total % 10 == checksum;
+
+        if (!validCard)
+            return false;
+
+        this.isPaid = true;
+        this.ccNo = ccNo;
+        this.paidWith = "card";
+
+        return true;
+    }
+
     public String getCcNo() {
         return ccNo;
     }

@@ -11,6 +11,11 @@ import java.util.Scanner;
  * @author Naz
  */
 public class Main {
+    
+    /**
+     * Justification: https://stackoverflow.com/questions/14142853/close-a-scanner-linked-to-system-in
+     */
+    public static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         // LocalDate hehe = LocalDate.of(2023, 12, 7);
@@ -76,8 +81,6 @@ public class Main {
          * if checking in at 2023-12-19 and checking out in 2023-12-27, room 1-1, 1-2, 1-4, 2-4 should be unavailable.
          */
 
-        Scanner scanner;
-
         while (true) {
             crossPlatformClearScreen();
             System.out.println("Welcome to UMP Hotel Booking System Interface!\n");
@@ -92,10 +95,7 @@ public class Main {
             System.out.println("\nPlease choose one of the customer to login as or type 'register' to register a new customer " +
                                "or 'quit' to quit!");
             System.out.print("INPUT: ");
-
-            scanner = new Scanner(System.in);
             String userInput1 = scanner.nextLine().toLowerCase();
-            scanner.close();
 
             userInput1 = userInput1.toLowerCase();
 
@@ -121,15 +121,11 @@ public class Main {
             System.out.println("Before you start, we need to know when your booking start and end.\n");
             System.out.print("For the starting date of your booking, please enter the date in the format (DD/MM/YYYY): ");
 
-            scanner = new Scanner(System.in);
             String userInput2 = scanner.nextLine();
-            scanner.close();
 
             System.out.print("Now, enter the last day of your booking in the same format (DD/MM/YYYY): ");
 
-            scanner = new Scanner(System.in);
             String userInput3 = scanner.nextLine();
-            scanner.close();
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -169,9 +165,7 @@ public class Main {
             System.out.println("\nWrite the name of the room that you would like to book.");
             System.out.print("INPUT: ");
 
-            scanner = new Scanner(System.in);
             String userInput4 = scanner.nextLine();
-            scanner.close();
 
             Optional<Room> roomGetResult = hotelUMP.getRoomByName(userInput4);
             if (! roomGetResult.isPresent()) {
@@ -193,9 +187,7 @@ public class Main {
 
             boolean paymentSucess = true;
 
-            scanner = new Scanner(System.in);
             String userInputPaymentMethod = scanner.nextLine().toLowerCase();
-            scanner.close();
 
 
             if (userInputPaymentMethod.equals("cash")) {
@@ -236,8 +228,6 @@ public class Main {
 
     public static void pressEnterToContinue() {
         System.out.println("Press enter to continue...");
-        Scanner tScanner = new Scanner(System.in);
-        tScanner.nextLine();
-        tScanner.close();
+        scanner.nextLine();
     }
 }

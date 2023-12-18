@@ -37,6 +37,41 @@ public class Main {
             LocalDate.of(2023, 12, 20), 
             Duration.ofDays(1));
 
+        hotelUMP.provideService(
+            hotelUMP.getCustomerByID(5).get(), 
+            hotelUMP.getRooms()[1], 
+            LocalDate.of(2023, 12, 20), 
+            Duration.ofDays(1));
+        
+        hotelUMP.provideService(
+            hotelUMP.getCustomerByID(4).get(), 
+            hotelUMP.getRooms()[7], 
+            LocalDate.of(2023, 12, 20), 
+            Duration.ofDays(1));
+        
+        hotelUMP.provideService(
+            hotelUMP.getCustomerByID(3).get(), 
+            hotelUMP.getRooms()[1], 
+            LocalDate.of(2023, 12, 25), 
+            Duration.ofDays(1));
+        
+        hotelUMP.provideService(
+            hotelUMP.getCustomerByID(6).get(), 
+            hotelUMP.getRooms()[0], 
+            LocalDate.of(2023, 12, 25), 
+            Duration.ofDays(3));
+        
+        /**
+         * Summary of the test
+         * The room 1-4, 1-2, 2-4 is booked from *2pm* 20231220 until 12pm 20231221
+         * The room 1-2 is booked from *2pm* 20231225 until 12pm 20231226
+         * The room 1-1 is booked from *2pm* 20231225 until 12pm 20231228
+         * 
+         * if checking in at 2023-12-19 and checking out in 2023-12-20, room 1-4, 1-2, 2-4 should be available.
+         * if checking in at 2023-12-20 and checking out in 2023-12-22, room 1-4, 1-2, 2-4 should be unavailable.
+         * if checking in at 2023-12-19 and checking out in 2023-12-27, room 1-1, 1-2, 1-4, 2-4 should be unavailable.
+         */
+
         System.out.println("Welcome to UMP Hotel Booking System Interface!\n");
 
         for (int i = 0; i < hotelUMP.numberOfCustomers; i++) {

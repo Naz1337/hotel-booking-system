@@ -156,25 +156,27 @@ public class Main {
             System.out.println(String.format("The duration of your stay: %d\n", stayDuration.toDays()));
             for (int i = 0; i < availableRooms.length; i++) {
                 Room room = availableRooms[i];
-                String format = "Room: %s Bed: %d RM%.2f";
+                String format = "%d Room: %s Bed: %d RM%.2f";
                 double price = room.getPrice() * stayDuration.toDays();
-                System.out.println(String.format(format, room, room.getBedCount(), price));
+                System.out.println(String.format(format, i + 1, room, room.getBedCount(), price));
                 // System.out.println(String.format("%d. %s", i + 1, room));
             }
 
             System.out.println("\nWrite the name of the room that you would like to book.");
             System.out.print("INPUT: ");
 
-            String userInput4 = scanner.nextLine();
+            int userInput4 = Integer.valueOf(scanner.nextLine()) - 1;
 
-            Optional<Room> roomGetResult = hotelUMP.getRoomByName(userInput4);
-            if (! roomGetResult.isPresent()) {
-                System.out.println("Sorry, the inputted room name does not exist. Please try again later.");
-                pressEnterToContinue();
-                continue;
-            }
+            // Optional<Room> roomGetResult = hotelUMP.getRoomByName(userInput4);
+            // if (! roomGetResult.isPresent()) {
+            //     System.out.println("Sorry, the inputted room name does not exist. Please try again later.");
+            //     pressEnterToContinue();
+            //     continue;
+            // }
 
-            Room roomToBeBooked = roomGetResult.get();
+            // Room roomToBeBooked = roomGetResult.get();
+
+            Room roomToBeBooked = availableRooms[userInput4];
 
             Booking booking = (Booking)hotelUMP.provideService(chosenOne, roomToBeBooked, startingDate, stayDuration);
             Invoice bookingInvoice = booking.getInvoice();

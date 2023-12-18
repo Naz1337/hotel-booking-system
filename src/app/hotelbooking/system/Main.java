@@ -31,35 +31,41 @@ public class Main {
         hotelUMP.addCustomer(new User(5, "Edward King", "5678901234"));
         hotelUMP.addCustomer(new User(6, "Fiona Queen", "6789012345"));
 
-        hotelUMP.provideService(
+        Booking testBook = null;
+        testBook = (Booking)hotelUMP.provideService(
             hotelUMP.getCustomerByID(6).get(), 
             hotelUMP.getRooms()[3], 
             LocalDate.of(2023, 12, 20), 
             Duration.ofDays(1));
+        testBook.getInvoice().payByCash();
 
-        hotelUMP.provideService(
+        testBook = (Booking)hotelUMP.provideService(
             hotelUMP.getCustomerByID(5).get(), 
             hotelUMP.getRooms()[1], 
             LocalDate.of(2023, 12, 20), 
             Duration.ofDays(1));
+        testBook.getInvoice().payByCash();
         
-        hotelUMP.provideService(
+        testBook = (Booking)hotelUMP.provideService(
             hotelUMP.getCustomerByID(4).get(), 
             hotelUMP.getRooms()[7], 
             LocalDate.of(2023, 12, 20), 
             Duration.ofDays(1));
+        testBook.getInvoice().payByCash();
         
-        hotelUMP.provideService(
+        testBook = (Booking)hotelUMP.provideService(
             hotelUMP.getCustomerByID(3).get(), 
             hotelUMP.getRooms()[1], 
             LocalDate.of(2023, 12, 25), 
             Duration.ofDays(1));
+        testBook.getInvoice().payByCash();
         
-        hotelUMP.provideService(
+        testBook = (Booking)hotelUMP.provideService(
             hotelUMP.getCustomerByID(6).get(), 
             hotelUMP.getRooms()[0], 
             LocalDate.of(2023, 12, 25), 
             Duration.ofDays(3));
+        testBook.getInvoice().payByCash();
         
         /**
          * Summary of the test

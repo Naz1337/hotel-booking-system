@@ -11,6 +11,15 @@ public class Invoice {
     private boolean isPaid;
     private String paidWith;
     private String ccNo;
+    private User customer;
+
+    public User getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(User customer) {
+        this.customer = customer;
+    }
 
     public String getReceipt() {
 
@@ -28,9 +37,10 @@ public class Invoice {
                     "Room Price: RM%.2f\n" +
                     "\n" +
                     "Booking:\n" +
-                    "  Start Date: %s\n" +
-                    "  Last Date : %s\n" +
-                    "  Duration  : %s\n" +
+                    "  Booker Name: %s\n" +
+                    "  Start Date : %s\n" +
+                    "  Last Date  : %s\n" +
+                    "  Duration   : %s\n" +
                     "\n" +
                     "Total Price: RM%.2f\n" +
                     "\n" +
@@ -40,6 +50,7 @@ public class Invoice {
                 this.invoiceDate,
                 this.theRoomToBeBooked,
                 this.theRoomToBeBooked.getPrice(),
+                this.customer.getName(),
                 this.startBookingDate,
                 this.startBookingDate.plusDays(this.bookingDuration.toDays()-1),
                 this.bookingDuration.toDays(),
@@ -49,21 +60,22 @@ public class Invoice {
         }
         else if (this.paidWith.equals("card")) {
             String format = "RECEIPT\n" +
-            "=======\n" +
-            "Date: %s\n" +
-            "\n" +
-            "Room: %s\n" +
-            "Room Price: RM%.2f\n" +
-            "\n" +
-            "Booking:\n" +
-            "  Start Date: %s\n" +
-            "  Last Date : %s\n" +
-            "  Duration  : %s\n" +
-            "\n" +
-            "Total Price: RM%.2f\n" +
-            "\n" +
-            "Paid with: %s\n" +
-            "Card: %s";
+                    "=======\n" +
+                    "Date: %s\n" +
+                    "\n" +
+                    "Room: %s\n" +
+                    "Room Price: RM%.2f\n" +
+                    "\n" +
+                    "Booking:\n" +
+                    "  Booker Name: %s\n" +
+                    "  Start Date : %s\n" +
+                    "  Last Date  : %s\n" +
+                    "  Duration   : %s\n" +
+                    "\n" +
+                    "Total Price: RM%.2f\n" +
+                    "\n" +
+                    "Paid with: %s\n" +
+                    "Card: %s";
 
             int cardLength = ccNo.length();
 
@@ -77,8 +89,9 @@ public class Invoice {
                 this.invoiceDate,
                 this.theRoomToBeBooked,
                 this.theRoomToBeBooked.getPrice(),
+                this.customer.getName(),
                 this.startBookingDate,
-                this.startBookingDate.plusDays(this.bookingDuration.toDays()-1),
+                this.startBookingDate.plusDays(this.bookingDuration.toDays()),
                 this.bookingDuration.toDays(),
                 this.theRoomToBeBooked.getPrice() * this.bookingDuration.toDays(),
                 "Card", cardInReceipt);
@@ -95,11 +108,12 @@ public class Invoice {
     }
 
     public Invoice(LocalDate invoiceDate, Room theRoomToBeBooked, LocalDate startBookingDate,
-            Duration bookingDuration) {
+            Duration bookingDuration, User customer) {
         this.invoiceDate = invoiceDate;
         this.theRoomToBeBooked = theRoomToBeBooked;
         this.startBookingDate = startBookingDate;
         this.bookingDuration = bookingDuration;
+        this.customer = customer;
     }
 
     public LocalDate getInvoiceDate() {

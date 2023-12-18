@@ -17,7 +17,7 @@ public class Booking extends Service{
         this.startDate = startDate;
         this.bookingDuration = bookingDuration;
 
-        this.invoice = new Invoice(LocalDate.now(), bookedRoom, startDate, bookingDuration);
+        this.invoice = new Invoice(LocalDate.now(), bookedRoom, startDate, bookingDuration, theBooker);
     }
 
     public Room getBookedRoom() {

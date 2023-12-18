@@ -22,10 +22,10 @@ public class Hotel extends Business {
         this.rooms[1] = new Room(2, 1, 50., 1, 2);
         this.rooms[2] = new Room(3, 1, 50., 1, 3);
         this.rooms[3] = new Room(4, 1, 50., 1, 4);
-        this.rooms[4] = new Room(5, 4, 300., 1, 1);
-        this.rooms[5] = new Room(6, 4, 300., 1, 2);
-        this.rooms[6] = new Room(7, 4, 300., 1, 3);
-        this.rooms[7] = new Room(8, 4, 300., 1, 4);
+        this.rooms[4] = new Room(5, 4, 300., 2, 1);
+        this.rooms[5] = new Room(6, 4, 300., 2, 2);
+        this.rooms[6] = new Room(7, 4, 300., 2, 3);
+        this.rooms[7] = new Room(8, 4, 300., 2, 4);
 
 
 

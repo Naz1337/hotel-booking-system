@@ -35,7 +35,7 @@ public class Main {
             hotelUMP.getCustomerByID(6).get(), 
             hotelUMP.getRooms()[3], 
             LocalDate.of(2023, 12, 20), 
-            Duration.ofDays(20));
+            Duration.ofDays(1));
 
         System.out.println("Welcome to UMP Hotel Booking System Interface!\n");
 
@@ -84,13 +84,18 @@ public class Main {
 
         // test
 
-        
+        if (startingDate.equals(lastDate)) {
+            System.out.println("You can not check out the same date you are checking in! Please try again later...");
+            return;
+        }
+
+        // TODO: check kalau last date tu sebelum start date dia hahaha
         
         Room[] availableRooms = hotelUMP.avaliableRooms(
             startingDate, 
             lastDate);
 
-        Duration stayDuration = Duration.between(startingDate.atStartOfDay(), lastDate.plusDays(1).atStartOfDay());
+        Duration stayDuration = Duration.between(startingDate.atStartOfDay(), lastDate.atStartOfDay());
         crossPlatformClearScreen();
 
 

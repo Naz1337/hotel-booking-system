@@ -2,6 +2,7 @@ package app.hotelbooking.system;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class Hotel extends Business {
@@ -73,7 +74,7 @@ public class Hotel extends Business {
             Booking[] bookings = this.findBookingRelatedTo(room);
 
             boolean available = true;
-            for (int j = 0; j < bookings.length; j++) {
+            for (int j = 0; j < this.numberOfBookings; j++) {
                 Booking book = bookings[j];
 
                 if (!book.isBookingVerified()) {
@@ -84,9 +85,9 @@ public class Hotel extends Business {
 
                 if (
                     !(
-                        startingDate.isAfter(lastBook) 
+                        startingDate.isAfter(lastBook.plusDays(-1)) 
                         || ((!(startingDate.isAfter(book.getStartDate())))
-                        && book.getStartDate().isAfter(lastDate))
+                        && book.getStartDate().isAfter(lastDate.plusDays(-1)))
                     )
                 ) {
                     available = false;

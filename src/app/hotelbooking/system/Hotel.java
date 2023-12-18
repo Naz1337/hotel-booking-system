@@ -2,6 +2,7 @@ package app.hotelbooking.system;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class Hotel extends Business {
     private String hotelName;
@@ -30,6 +31,18 @@ public class Hotel extends Business {
 
 
 
+    }
+
+    public Optional<Room> getRoomByName(String roomName) {
+        for (int i = 0; i < this.rooms.length; i++) {
+            Room room = this.rooms[i];
+
+            if (room.getRoomName().equals(roomName)) {
+                return Optional.of(room);
+            }
+        }
+
+        return Optional.empty();
     }
 
     public static Hotel getInstance() {
@@ -62,6 +75,10 @@ public class Hotel extends Business {
             boolean available = true;
             for (int j = 0; j < bookings.length; j++) {
                 Booking book = bookings[j];
+
+                if (!book.isBookingVerified()) {
+                    continue;
+                }
 
                 LocalDate lastBook = book.getStartDate().plusDays(book.getBookingDuration().toDays());
 

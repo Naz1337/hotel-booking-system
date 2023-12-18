@@ -2,7 +2,6 @@ package app.hotelbooking.system;
 
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class Hotel extends Business {

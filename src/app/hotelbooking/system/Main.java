@@ -187,12 +187,12 @@ public class Main {
 
             boolean paymentSucess = true;
 
-            String userInputPaymentMethod = scanner.nextLine().toLowerCase();
+            int userInputPaymentMethod = Integer.valueOf(scanner.nextLine().toLowerCase());
 
 
-            if (userInputPaymentMethod.equals("cash")) {
+            if (userInputPaymentMethod == 1) {
                 bookingInvoice.payByCash();
-            } else if (userInputPaymentMethod.equals("card")) {
+            } else if (userInputPaymentMethod == 2) {
                 System.out.println("\n You have choosen to pay with Card.");
                 System.out.println("Please enter your credit card number.\n");
                 System.out.print("INPUT: ");

@@ -31,6 +31,12 @@ public class Main {
         hotelUMP.addCustomer(new User(5, "Edward King", "5678901234"));
         hotelUMP.addCustomer(new User(6, "Fiona Queen", "6789012345"));
 
+        hotelUMP.provideService(
+            hotelUMP.getCustomerByID(6).get(), 
+            hotelUMP.getRooms()[3], 
+            LocalDate.of(2023, 12, 20), 
+            Duration.ofDays(20));
+
         System.out.println("Welcome to UMP Hotel Booking System Interface!\n");
 
         for (int i = 0; i < hotelUMP.numberOfCustomers; i++) {
@@ -78,11 +84,7 @@ public class Main {
 
         // test
 
-        // hotelUMP.provideService(
-        //     hotelUMP.getCustomerByID(2).get(), 
-        //     hotelUMP.getRooms()[0], 
-        //     LocalDate.of(2023, 12, 1), 
-        //     Duration.ofDays(30));
+        
         
         Room[] availableRooms = hotelUMP.avaliableRooms(
             startingDate, 

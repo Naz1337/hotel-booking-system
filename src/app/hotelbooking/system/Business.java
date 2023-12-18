@@ -34,7 +34,7 @@ public abstract class Business {
 
     public Optional<User> getCustomerByID(int ID) {
         User users[] = this.getCustomers();
-        for (int i = 0; i < users.length; i++) {
+        for (int i = 0; i < this.numberOfCustomers; i++) {
             User user = users[i];
 
             if (user.getUserID() == ID)

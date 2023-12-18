@@ -73,7 +73,7 @@ public class Hotel extends Business {
             Booking[] bookings = this.findBookingRelatedTo(room);
 
             boolean available = true;
-            for (int j = 0; j < this.numberOfBookings; j++) {
+            for (int j = 0; j < bookings.length; j++) {
                 Booking book = bookings[j];
 
                 if (!book.isBookingVerified()) {

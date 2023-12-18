@@ -34,7 +34,7 @@ public class Invoice {
                     "\n" +
                     "Total Price: RM%.2f\n" +
                     "\n" +
-                    "Paid with: %s\n";
+                    "Paid with: %s";
 
             return String.format(format, 
                 this.invoiceDate,
@@ -45,7 +45,7 @@ public class Invoice {
                 this.bookingDuration.toDays(),
                 this.theRoomToBeBooked.getPrice() * this.bookingDuration.toDays(),
                 "Cash"
-            ).strip();
+            );
         }
         else if (this.paidWith.equals("card")) {
             String format = "RECEIPT\n" +
@@ -63,7 +63,7 @@ public class Invoice {
             "Total Price: RM%.2f\n" +
             "\n" +
             "Paid with: %s\n" +
-            "Card: %s\n";
+            "Card: %s";
 
             int cardLength = ccNo.length();
 
@@ -81,7 +81,7 @@ public class Invoice {
                 this.startBookingDate.plusDays(this.bookingDuration.toDays()-1),
                 this.bookingDuration.toDays(),
                 this.theRoomToBeBooked.getPrice() * this.bookingDuration.toDays(),
-                "Card", cardInReceipt).strip();
+                "Card", cardInReceipt);
         }
         return "This invoice is being paid by unknown type of payment method.";
     }

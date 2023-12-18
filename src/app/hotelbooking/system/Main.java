@@ -2,7 +2,6 @@ package app.hotelbooking.system;
 
 import java.time.LocalDate;
 import java.time.Duration;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.Scanner;
@@ -79,36 +78,81 @@ public class Main {
 
         // test
 
-        hotelUMP.provideService(
-            hotelUMP.getCustomerByID(2).get(), 
-            hotelUMP.getRooms()[0], 
-            LocalDate.of(2023, 12, 1), 
-            Duration.ofDays(30));
+        // hotelUMP.provideService(
+        //     hotelUMP.getCustomerByID(2).get(), 
+        //     hotelUMP.getRooms()[0], 
+        //     LocalDate.of(2023, 12, 1), 
+        //     Duration.ofDays(30));
         
+        Room[] availableRooms = hotelUMP.avaliableRooms(
+            startingDate, 
+            lastDate);
 
+        Duration stayDuration = Duration.between(startingDate.atStartOfDay(), lastDate.plusDays(1).atStartOfDay());
+        crossPlatformClearScreen();
+
+
+        System.out.println("From your inputted booking dates, we have determine that the following rooms are avaialable for you to book.");
+        System.out.println(String.format("The duration of your stay: %d\n", stayDuration.toDays()));
+        for (int i = 0; i < availableRooms.length; i++) {
+            Room room = availableRooms[i];
+            String format = "Room: %s Bed: %d RM%.2f";
+            double price = room.getPrice() * stayDuration.toDays();
+            System.out.println(String.format(format, room, room.getBedCount(), price));
+            // System.out.println(String.format("%d. %s", i + 1, room));
+        }
+
+        System.out.println("\nWrite the name of the room that you would like to book.");
+        System.out.print("INPUT: ");
+        String userInput4 = scanner.nextLine().strip();
+
+        Optional<Room> roomGetResult = hotelUMP.getRoomByName(userInput4);
+        if (! roomGetResult.isPresent()) {
+            System.out.println("Sorry, the inputted room name does not exist. Please try again later.");
+            return;
+        }
+
+        Room roomToBeBooked = roomGetResult.get();
+
+        Booking booking = (Booking)hotelUMP.provideService(chosenOne, roomToBeBooked, startingDate, stayDuration);
+        Invoice bookingInvoice = booking.getInvoice();
+
+        crossPlatformClearScreen();
+        System.out.println(String.format("You have choosen to book the room %s for %d day(s).", roomToBeBooked, stayDuration.toDays()));
+        System.out.println("Now we need you to choose your payment method to pay for the booking");
+        System.out.println("\n1. Cash\n2. Card\n");
+        System.out.print("INPUT: ");
+
+        boolean paymentSucess = true;
+        String userInputPaymentMethod = scanner.nextLine().toLowerCase();
+        if (userInputPaymentMethod.equals("cash")) {
+            bookingInvoice.payByCash();
+        } else if (userInputPaymentMethod.equals("card")) {
+            System.out.println("\n You have choosen to pay with Card.");
+            System.out.println("Please enter your credit card number.\n");
+            System.out.print("INPUT: ");
+            String ccNo = scanner.nextLine().strip();
+            if (!bookingInvoice.payByCard(ccNo)) {
+                System.out.println("\nThe card you just entered is invalid. Please try again later");
+                paymentSucess = false;
+            }
+        }
+        
+        if (!paymentSucess) return;
+
+        crossPlatformClearScreen();
+
+        System.out.println(bookingInvoice.getReceipt());
+        System.out.println("\n The payment succeed! Above is the receipt for your booking. Thank you for choosing UMP Hotel.");
+
+
+
+        scanner.close();
     }
 
     public static void crossPlatformClearScreen() {
         for (int i = 0; i < 100; i++) {
             System.out.print('\n');
         }
-    }
-    
-    public static boolean isValidLuhn(String number) {
-        int checksum = Character.getNumericValue(number.charAt(number.length() - 1));
-        int total = 0;
-
-        for (int i = number.length() - 2; i >= 0; i--) {
-            int sum = 0;
-            int digit = Character.getNumericValue(number.charAt(i));
-            if (i % 2 == 0) {
-                digit *= 2;
-            }
-
-            sum = digit / 10 + digit % 10;
-            total += sum;
-        }
-
-        return 10 - total % 10 == checksum;
     }
 }

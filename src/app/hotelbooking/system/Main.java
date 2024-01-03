@@ -179,7 +179,7 @@ public class Main {
             Room roomToBeBooked = availableRooms[userInput4];
 
             Booking booking = (Booking)hotelUMP.provideService(chosenOne, roomToBeBooked, startingDate, stayDuration);
-            Invoice bookingInvoice = booking.getInvoice();
+            BookingInvoiceLine bookingInvoice = booking.getInvoice();
 
             crossPlatformClearScreen();
             System.out.println(String.format("You have choosen to book the room %s for %d day(s).", roomToBeBooked, stayDuration.toDays()));

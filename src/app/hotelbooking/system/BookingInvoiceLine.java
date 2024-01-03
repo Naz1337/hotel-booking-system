@@ -3,7 +3,7 @@ package app.hotelbooking.system;
 import java.time.Duration;
 import java.time.LocalDate;
 
-public class Invoice {
+public class BookingInvoiceLine {
     private LocalDate invoiceDate;
     private Room theRoomToBeBooked;
     private LocalDate startBookingDate;
@@ -107,7 +107,7 @@ public class Invoice {
         this.paidWith = paidWith;
     }
 
-    public Invoice(LocalDate invoiceDate, Room theRoomToBeBooked, LocalDate startBookingDate,
+    public BookingInvoiceLine(LocalDate invoiceDate, Room theRoomToBeBooked, LocalDate startBookingDate,
             Duration bookingDuration, User customer) {
         this.invoiceDate = invoiceDate;
         this.theRoomToBeBooked = theRoomToBeBooked;

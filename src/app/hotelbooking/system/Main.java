@@ -38,6 +38,7 @@ public class Main {
         Invoice testInvoice = new Invoice(LocalDate.of(1970, 1, 1), hotelUMP.getCustomerByID(0).get());
         Booking testBook = null;
         testBook = (Booking)hotelUMP.provideService(
+            "booking",
             hotelUMP.getCustomerByID(6).get(), 
             hotelUMP.getRooms()[3], 
             LocalDate.of(2023, 12, 20), 
@@ -45,6 +46,7 @@ public class Main {
         testInvoice.addInvoiceLine(testBook.getInvoiceLine());
 
         testBook = (Booking)hotelUMP.provideService(
+            "booking",
             hotelUMP.getCustomerByID(5).get(), 
             hotelUMP.getRooms()[1], 
             LocalDate.of(2023, 12, 20), 
@@ -52,6 +54,7 @@ public class Main {
         testInvoice.addInvoiceLine(testBook.getInvoiceLine());
         
         testBook = (Booking)hotelUMP.provideService(
+            "booking",
             hotelUMP.getCustomerByID(4).get(), 
             hotelUMP.getRooms()[7], 
             LocalDate.of(2023, 12, 20), 
@@ -59,6 +62,7 @@ public class Main {
         testInvoice.addInvoiceLine(testBook.getInvoiceLine());
         
         testBook = (Booking)hotelUMP.provideService(
+            "booking",
             hotelUMP.getCustomerByID(3).get(), 
             hotelUMP.getRooms()[1], 
             LocalDate.of(2023, 12, 25), 
@@ -66,6 +70,7 @@ public class Main {
         testInvoice.addInvoiceLine(testBook.getInvoiceLine());
         
         testBook = (Booking)hotelUMP.provideService(
+            "booking",
             hotelUMP.getCustomerByID(6).get(), 
             hotelUMP.getRooms()[0], 
             LocalDate.of(2023, 12, 25), 
@@ -108,6 +113,7 @@ public class Main {
 
             if (userInput1.startsWith("register")) {
                 System.out.println("This flow is not implemented yet. please check back later");
+                // TODO: pleease someone 😭😭😭
                 pressEnterToContinue();
                 continue;
             } else if (userInput1.equals("quit")) {
@@ -185,12 +191,27 @@ public class Main {
 
             Room roomToBeBooked = availableRooms[userInput4];
 
-            Booking booking = (Booking)hotelUMP.provideService(chosenOne, roomToBeBooked, startingDate, stayDuration);
+            Booking booking = (Booking)hotelUMP.provideService("booking", chosenOne, roomToBeBooked, startingDate, stayDuration);
             Invoice invoice = new Invoice(LocalDate.now(), chosenOne);
             invoice.addInvoiceLine(booking.getInvoiceLine());
 
             crossPlatformClearScreen();
-            System.out.println(String.format("You have choosen to book the room %s for %d day(s).", roomToBeBooked, stayDuration.toDays()));
+            System.out.print(String.format("You have choosen to book the room %s for %d day(s).\n", roomToBeBooked, stayDuration.toDays()));
+            
+            System.out.print("Do you want to buy lunch package(RM 14.00 per pax)?(y/N): ");
+            String userInput5 = scanner.nextLine();
+
+            if (userInput5.length() != 0) {
+                System.out.println("How many people will be having lunch?: ");
+                int paxNo = Integer.valueOf(scanner.nextLine());
+                Lunch lunch = (Lunch)hotelUMP.provideService("lunch", chosenOne, paxNo);
+                invoice.addInvoiceLine(lunch.getLunchInvoiceLine());
+
+                System.out.println("You have chosen to buy Lunch for " + paxNo + " pax.");
+
+                pressEnterToContinue();
+            }
+            
             System.out.println("Now we need you to choose your payment method to pay for the booking");
             System.out.println("\n1. Cash\n2. Card\n");
             System.out.print("INPUT: ");

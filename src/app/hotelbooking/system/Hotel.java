@@ -188,6 +188,7 @@ public class Hotel extends Business {
  * 2. LocalDate: The start date of the booking.
  * 3. Duration: The duration of the booking.
  *
+ * @param serviceType can be either "booking" or "lunch"
  * @param customer The user for whom the service is to be provided.
  * @param informations Varargs providing additional information. This method expects
  *                     exactly three parameters - Room, LocalDate, and Duration, in that order.
@@ -199,35 +200,47 @@ public class Hotel extends Business {
  * @see Duration
  */
     @Override
-    public Service provideService(User customer, Object... informations) {
-        
-        if (informations.length < 3)
-            return null;
+    public Service provideService(String serviceType, User customer, Object... informations) {
+        if (serviceType.equals("booking")) {
+            if (informations.length < 3)
+                return null;
 
-        if (!(informations[0] instanceof Room)) 
-            return null;
-        
-        Room bookedRoom = (Room)informations[0];
+            if (!(informations[0] instanceof Room)) 
+                return null;
+            
+            Room bookedRoom = (Room)informations[0];
 
-        // User theBooker = customer;
+            // User theBooker = customer;
 
-        if (!(informations[1] instanceof LocalDate))
-            return null;
-        
-        LocalDate startDate = (LocalDate)informations[1];
+            if (!(informations[1] instanceof LocalDate))
+                return null;
+            
+            LocalDate startDate = (LocalDate)informations[1];
 
-        if (!(informations[2] instanceof Duration))
-            return null;
-        
-        Duration bookingDuration = (Duration)informations[2];
+            if (!(informations[2] instanceof Duration))
+                return null;
+            
+            Duration bookingDuration = (Duration)informations[2];
 
-        Booking booking = new Booking(bookedRoom, customer, startDate, bookingDuration);
+            Booking booking = new Booking(bookedRoom, customer, startDate, bookingDuration);
 
-        if (! this.addBooking(booking)) {
-            System.out.println("[WARN] Bookings array is full 👍");
-            return null;
+            if (! this.addBooking(booking)) {
+                System.out.println("[WARN] Bookings array is full 👍");
+                return null;
+            }
+            return (Service)(booking);
         }
+        else if (serviceType.equals("lunch")) {
+            if (!(informations[0] instanceof Integer)) {
+                return null;
+            }
+            int paxNo = (Integer)informations[0];
 
-        return (Service)(booking);
+            Lunch lunch = new Lunch(paxNo);
+            return (Service) lunch;
+        }
+        
+        
+        return null;
     }
 }

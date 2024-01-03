@@ -27,6 +27,7 @@ public class Main {
 
         Hotel hotelUMP = Hotel.getInstance().setHotelName("UMP Hotel");
 
+        hotelUMP.addCustomer(new User(0, "Admin", "1337"));
         hotelUMP.addCustomer(new User(1, "Alice Smith", "1234567890"));
         hotelUMP.addCustomer(new User(2, "Bob Johnson", "2345678901"));
         hotelUMP.addCustomer(new User(3, "Charlie Brown", "3456789012"));
@@ -34,41 +35,47 @@ public class Main {
         hotelUMP.addCustomer(new User(5, "Edward King", "5678901234"));
         hotelUMP.addCustomer(new User(6, "Fiona Queen", "6789012345"));
 
+        Invoice testInvoice = new Invoice(LocalDate.of(1970, 1, 1), hotelUMP.getCustomerByID(0).get());
         Booking testBook = null;
         testBook = (Booking)hotelUMP.provideService(
             hotelUMP.getCustomerByID(6).get(), 
             hotelUMP.getRooms()[3], 
             LocalDate.of(2023, 12, 20), 
             Duration.ofDays(1));
-        testBook.getInvoice().payByCash();
+        testInvoice.addInvoiceLine(testBook.getInvoiceLine());
 
         testBook = (Booking)hotelUMP.provideService(
             hotelUMP.getCustomerByID(5).get(), 
             hotelUMP.getRooms()[1], 
             LocalDate.of(2023, 12, 20), 
             Duration.ofDays(1));
-        testBook.getInvoice().payByCash();
+        testInvoice.addInvoiceLine(testBook.getInvoiceLine());
         
         testBook = (Booking)hotelUMP.provideService(
             hotelUMP.getCustomerByID(4).get(), 
             hotelUMP.getRooms()[7], 
             LocalDate.of(2023, 12, 20), 
             Duration.ofDays(1));
-        testBook.getInvoice().payByCash();
+        testInvoice.addInvoiceLine(testBook.getInvoiceLine());
         
         testBook = (Booking)hotelUMP.provideService(
             hotelUMP.getCustomerByID(3).get(), 
             hotelUMP.getRooms()[1], 
             LocalDate.of(2023, 12, 25), 
             Duration.ofDays(1));
-        testBook.getInvoice().payByCash();
+        testInvoice.addInvoiceLine(testBook.getInvoiceLine());
         
         testBook = (Booking)hotelUMP.provideService(
             hotelUMP.getCustomerByID(6).get(), 
             hotelUMP.getRooms()[0], 
             LocalDate.of(2023, 12, 25), 
             Duration.ofDays(3));
-        testBook.getInvoice().payByCash();
+        testInvoice.addInvoiceLine(testBook.getInvoiceLine());
+        testInvoice.payByCash();
+
+        // System.out.println(testInvoice.getReceipt());
+
+        // pressEnterToContinue();
         
         /**
          * Summary of the test
@@ -179,7 +186,8 @@ public class Main {
             Room roomToBeBooked = availableRooms[userInput4];
 
             Booking booking = (Booking)hotelUMP.provideService(chosenOne, roomToBeBooked, startingDate, stayDuration);
-            BookingInvoiceLine bookingInvoice = booking.getInvoice();
+            Invoice invoice = new Invoice(LocalDate.now(), chosenOne);
+            invoice.addInvoiceLine(booking.getInvoiceLine());
 
             crossPlatformClearScreen();
             System.out.println(String.format("You have choosen to book the room %s for %d day(s).", roomToBeBooked, stayDuration.toDays()));
@@ -193,13 +201,13 @@ public class Main {
 
 
             if (userInputPaymentMethod == 1) {
-                bookingInvoice.payByCash();
+                invoice.payByCash();
             } else if (userInputPaymentMethod == 2) {
                 System.out.println("\n You have choosen to pay with Card.");
                 System.out.println("Please enter your credit card number.\n");
                 System.out.print("INPUT: ");
                 String ccNo = scanner.nextLine();
-                if (!bookingInvoice.payByCard(ccNo)) {
+                if (!invoice.payByCard(ccNo)) {
                     System.out.println("\nThe card you just entered is invalid. Please try again later");
                     paymentSucess = false;
                 }
@@ -212,7 +220,7 @@ public class Main {
 
             crossPlatformClearScreen();
 
-            System.out.println(bookingInvoice.getReceipt());
+            System.out.println(invoice.getReceipt());
             System.out.println("\n The payment succeed! Above is the receipt for your booking. Thank you for choosing UMP Hotel.");
             pressEnterToContinue();
         }

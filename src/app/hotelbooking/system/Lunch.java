@@ -1,7 +1,7 @@
 package app.hotelbooking.system;
 
 public class Lunch extends Service {
-    public Lunch() {
+    public Lunch(Booking relatedBooking, int paxNo) {
         super("Lunch");
     }
 }

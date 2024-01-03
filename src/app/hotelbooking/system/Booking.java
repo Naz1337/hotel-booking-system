@@ -8,7 +8,7 @@ public class Booking extends Service{
     private User theBooker;
     private LocalDate startDate;
     private Duration bookingDuration;
-    private BookingInvoiceLine invoice;
+    private BookingInvoiceLine invoiceLine;
 
     public Booking(Room bookedRoom, User theBooker, LocalDate startDate, Duration bookingDuration) {
         super("Hotel Room");
@@ -17,7 +17,7 @@ public class Booking extends Service{
         this.startDate = startDate;
         this.bookingDuration = bookingDuration;
 
-        this.invoice = new BookingInvoiceLine(LocalDate.now(), bookedRoom, startDate, bookingDuration, theBooker);
+        this.invoiceLine = new BookingInvoiceLine(this);
     }
 
     public Room getBookedRoom() {
@@ -52,16 +52,20 @@ public class Booking extends Service{
         this.bookingDuration = bookingDuration;
     }
 
-    public BookingInvoiceLine getInvoice() {
-        return invoice;
+    public BookingInvoiceLine getInvoiceLine() {
+        return invoiceLine;
     }
 
-    public void setInvoice(BookingInvoiceLine invoice) {
-        this.invoice = invoice;
+    public void setInvoiceLine(BookingInvoiceLine invoice) {
+        this.invoiceLine = invoice;
     }
 
     public boolean isBookingVerified() {
-        return this.getInvoice().isPaid();
+        Invoice invoice = this.getInvoiceLine().getInvoice();
+        if (invoice == null) {
+            return false;
+        }
+        return invoice.isPaid();
     }
 
 }

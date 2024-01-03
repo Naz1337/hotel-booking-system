@@ -92,7 +92,7 @@ public class Main {
                     "%d. %s", customer.getUserID(), customer.getName()));
             }
 
-            System.out.println("\nPlease choose one of the customer to login as or type 'register' to register a new customer " +
+            System.out.println("\nPlease choose the number of the customer to login as or type 'register' to register a new customer " +
                                "or 'quit' to quit!");
             System.out.print("INPUT: ");
             String userInput1 = scanner.nextLine().toLowerCase();
@@ -162,7 +162,7 @@ public class Main {
                 // System.out.println(String.format("%d. %s", i + 1, room));
             }
 
-            System.out.println("\nWrite the name of the room that you would like to book.");
+            System.out.println("\nWrite the number of the room that you would like to book.");
             System.out.print("INPUT: ");
 
             int userInput4 = Integer.valueOf(scanner.nextLine()) - 1;

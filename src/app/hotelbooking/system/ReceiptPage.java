@@ -71,7 +71,9 @@ public class ReceiptPage extends javax.swing.JFrame {
 
     private void backToBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backToBtnActionPerformed
         // TODO add your handling code here:
-        
+        CustomerMainPage customerMainPage = new CustomerMainPage(CustomerMainPage.customer);
+        this.setVisible(false);
+        customerMainPage.setVisible(true);
     }//GEN-LAST:event_backToBtnActionPerformed
 
     /**

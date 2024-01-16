@@ -26,7 +26,9 @@ public abstract class Business {
         return customers;
     }
 
-
+    public int getNumberOfCustomers() {
+        return this.numberOfCustomers;
+    }
 
     public void setCustomers(User[] users) {
         this.customers = users;

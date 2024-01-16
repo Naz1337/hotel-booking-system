@@ -165,8 +165,9 @@ public class RoomBookingPage extends javax.swing.JFrame {
     }//GEN-LAST:event_bckBtnActionPerformed
 
     private void nextBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextBtnActionPerformed
-        
-        
+        LunchSelectPage newLunch = new LunchSelectPage();
+        this.setVisible(false);
+        newLunch.setVisible(true);
     }//GEN-LAST:event_nextBtnActionPerformed
 
     /**

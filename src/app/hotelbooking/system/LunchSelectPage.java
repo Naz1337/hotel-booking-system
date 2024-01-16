@@ -5,17 +5,26 @@
  */
 package app.hotelbooking.system;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author Naz
  */
 public class LunchSelectPage extends javax.swing.JFrame {
+    
+    public static Invoice invoice;
+    public static String isLunch;
+    private Booking booking;
+    public static int noPax;
 
     /**
      * Creates new form LunchSelectPage
      */
-    public LunchSelectPage() {
+    public LunchSelectPage(Booking booking) {
+        this.booking = booking;
         initComponents();
+        
         lunchLbl.setVisible(false);
         inputLbl.setVisible(false);
         lunchInput.setVisible(false);
@@ -65,8 +74,18 @@ public class LunchSelectPage extends javax.swing.JFrame {
         inputLbl.setText("Input:");
 
         lunchInput.setText("0");
+        lunchInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lunchInputActionPerformed(evt);
+            }
+        });
 
         confirmBtn.setText("Confirm");
+        confirmBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -119,13 +138,17 @@ public class LunchSelectPage extends javax.swing.JFrame {
 
     private void noBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noBtnActionPerformed
         // TODO add your handling code here:
-        InvoicePage ip = new InvoicePage();
+        isLunch = "No";
+        invoice = new Invoice(LocalDate.now(), CustomerMainPage.customer);
+        invoice.addInvoiceLine(booking.getInvoiceLine());
+        InvoicePage ip = new InvoicePage(invoice);
         this.setVisible(false);
         ip.setVisible(true);
     }//GEN-LAST:event_noBtnActionPerformed
 
     private void yesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yesBtnActionPerformed
         // TODO add your handling code here:
+        isLunch = "Yes";
         noBtn.setEnabled(false);
         lunchLbl.setVisible(true);
         inputLbl.setVisible(true);
@@ -133,40 +156,26 @@ public class LunchSelectPage extends javax.swing.JFrame {
         confirmBtn.setVisible(true);
     }//GEN-LAST:event_yesBtnActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LunchSelectPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LunchSelectPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LunchSelectPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LunchSelectPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
+        // TODO add your handling code here:
+        
+        
+        noPax = Integer.valueOf(lunchInput.getText());
+        
+        Lunch lunch = (Lunch)Hotel.getInstance().provideService("lunch", CustomerMainPage.customer, noPax);
+        invoice = new Invoice(LocalDate.now(), CustomerMainPage.customer);
+        invoice.addInvoiceLine(booking.getInvoiceLine());
+        invoice.addInvoiceLine(lunch.getLunchInvoiceLine());
+        
+        InvoicePage ip = new InvoicePage(invoice);
+        this.setVisible(false);
+        ip.setVisible(true);
+    }//GEN-LAST:event_confirmBtnActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LunchSelectPage().setVisible(true);
-            }
-        });
-    }
+    private void lunchInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lunchInputActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lunchInputActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton confirmBtn;

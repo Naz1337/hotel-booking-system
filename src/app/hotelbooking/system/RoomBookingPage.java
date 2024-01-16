@@ -7,17 +7,19 @@ package app.hotelbooking.system;
 
 import java.time.LocalDate;
 import java.time.Duration;
+
 /**
  *
  * @author Naz
  */
-
 public class RoomBookingPage extends javax.swing.JFrame {
 
     public static LocalDate strtDate;
     public static LocalDate lstDate;
     private Room[] availableRooms;
+    private Room roomToBeBooked = null;
     private Duration stayDuration;
+    public static Booking booking;
     /**
      * Creates new form RoomBookingPage
      */
@@ -28,23 +30,23 @@ public class RoomBookingPage extends javax.swing.JFrame {
         String chosenDateMsg = String.format("%s - %s, %d days", strtDate.toString(), lstDate.toString(), stayDuration.toDays());
         initComponents();
         this.chosenDateLbl.setText(chosenDateMsg);
-        
+
     }
-    
+
     public String[] listOfAvailableRooms() {
         Hotel umpHotel = Hotel.getInstance();
         this.availableRooms = umpHotel.avaliableRooms(strtDate, lstDate);
-        
+
         int durationInDays = (int) this.stayDuration.toDays();
-        
+
         String[] tobereturned = new String[this.availableRooms.length];
-        
+
         for (int i = 0; i < this.availableRooms.length; i++) {
             Room room = this.availableRooms[i];
-            
+
             tobereturned[i] = String.format("Room %s - RM%.2f", room, room.getPrice() * durationInDays);
         }
-        
+
         return tobereturned;
     }
 
@@ -156,6 +158,10 @@ public class RoomBookingPage extends javax.swing.JFrame {
 //        this.loginBtn.setEnabled(true);
 //        else
 //        this.loginBtn.setEnabled(false);
+        int selectedRoomStr = (int) roomCmboBox.getSelectedIndex();
+
+        roomToBeBooked = this.availableRooms[selectedRoomStr];
+
     }//GEN-LAST:event_roomCmboBoxActionPerformed
 
     private void bckBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bckBtnActionPerformed
@@ -165,7 +171,9 @@ public class RoomBookingPage extends javax.swing.JFrame {
     }//GEN-LAST:event_bckBtnActionPerformed
 
     private void nextBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextBtnActionPerformed
-        LunchSelectPage newLunch = new LunchSelectPage();
+        booking = (Booking)Hotel.getInstance().provideService("booking", CustomerMainPage.customer, roomToBeBooked, RoomBookingPage.strtDate, stayDuration);
+        
+        LunchSelectPage newLunch = new LunchSelectPage(booking);
         this.setVisible(false);
         newLunch.setVisible(true);
     }//GEN-LAST:event_nextBtnActionPerformed

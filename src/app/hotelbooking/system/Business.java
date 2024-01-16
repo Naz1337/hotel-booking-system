@@ -46,5 +46,5 @@ public abstract class Business {
         return Optional.empty();
     }
 
-    abstract public Service provideService(User customer, Object... informations);
+    abstract public Service provideService(String serviceType, User customer, Object... informations);
 }
